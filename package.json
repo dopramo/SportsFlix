@@ -1,0 +1,12 @@
+{
+  "name": "sportsflix",
+  "version": "1.0.0",
+  "description": "IPTV Sports Streaming Web Application",
+  "scripts": {
+    "start": "node backend/server.js",
+    "install": "cd backend && npm install"
+  },
+  "engines": {
+    "node": "20"
+  }
+}
