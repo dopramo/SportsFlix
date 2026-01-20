@@ -4,7 +4,7 @@ function loadChannels() {
   grid.innerHTML = '<div class="loading">Loading channels...</div>';
   
   // Load unified channels (CricHD and M3U combined internally)
-  fetch('/api/all-channels')
+  fetch('/api/channels')
     .then(r => r.json())
     .then(data => {
       displayChannels(data);
@@ -16,31 +16,28 @@ function loadChannels() {
     });
 }
 
-function displayChannels(channelData) {
+function displayChannels(channels) {
   const grid = document.getElementById("channels-grid");
   grid.innerHTML = "";
   
-  // Channels are already sorted (CricHD first, then M3U)
-  const channelEntries = Object.entries(channelData);
-  
-  channelEntries.forEach(([name, data]) => {
+  // Channels are already sorted by order from server
+  channels.forEach(channel => {
     const card = document.createElement("div");
     card.className = "home-channel-card";
-    card.dataset.channelName = name;
+    card.dataset.channelName = channel.name;
     
     // Add channel logo if available
-    if (data.logo) {
+    if (channel.logo) {
       const img = document.createElement("img");
-      img.src = data.logo;
-      img.alt = name;
+      img.src = channel.logo;
+      img.alt = channel.name;
       img.referrerPolicy = "no-referrer";
       img.onerror = () => {
-        if (!img.dataset.proxyTried && data.logo && !data.logo.startsWith("/api/logo")) {
+        if (!img.dataset.proxyTried && channel.logo && !channel.logo.startsWith("/api/logo")) {
           img.dataset.proxyTried = "1";
-          img.src = `/api/logo?url=${encodeURIComponent(data.logo)}`;
+          img.src = `/api/logo?url=${encodeURIComponent(channel.logo)}`;
           return;
         }
-        // Show channel name if logo fails to load
         img.style.display = "none";
         const nameDiv = card.querySelector('.channel-name-fallback');
         if (nameDiv) nameDiv.style.display = "block";
@@ -51,13 +48,13 @@ function displayChannels(channelData) {
     // Channel name fallback (shown if no logo)
     const nameDiv = document.createElement("div");
     nameDiv.className = "channel-name-fallback";
-    nameDiv.textContent = name.toUpperCase();
-    nameDiv.style.display = data.logo ? "none" : "block";
+    nameDiv.textContent = channel.name.toUpperCase();
+    nameDiv.style.display = channel.logo ? "none" : "block";
     card.appendChild(nameDiv);
     
     // Click handler - navigate to channel page
     card.onclick = () => {
-      window.location.href = `channel.html?channel=${encodeURIComponent(name)}`;
+      window.location.href = `channel.html?channel=${encodeURIComponent(channel.name)}`;
     };
     
     grid.appendChild(card);
