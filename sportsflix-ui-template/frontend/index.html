@@ -3,49 +3,55 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sports IPTV Player</title>
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <title>SportsFlix - All Channels</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="donation.css">
 </head>
-<body>
-  <div id="app-header">
-    <h1>🏆 Sports IPTV Player</h1>
-    <p>Educational Personal Streaming Platform</p>
-    <div id="source-selector" style="display:none;">
-      <button id="source-m3u" class="source-btn active">📡 M3U Streams</button>
-      <button id="source-crichd" class="source-btn">🏏 CricHD</button>
+<body class="home-page">
+  <!-- Header -->
+  <header class="home-header">
+    <div class="logo-container">
+      <div class="logo-icon">🏏</div>
+      <span class="logo-text">SportsFlix - <span class="logo-free">Free</span></span>
     </div>
-  </div>
-  
-  <div class="container">
-    <!-- Player Section -->
-    <div class="player-section">
-      <div class="player-title">Live Stream Player</div>
-      <div id="player-container">
-        <video id="player" controls autoplay crossorigin="anonymous"></video>
-      </div>
-    </div>
+    <nav class="home-nav">
+      <a href="home.html" class="nav-link active">HOME</a>
+      <a href="player.html" class="nav-link" style="display: none;">PLAYER</a>
+    </nav>
+  </header>
 
-    <!-- Stream Selection -->
-    <div class="stream-section">
-      <div id="stream-panel" style="display:none">
-        <!-- Stream buttons will be added here dynamically -->
-      </div>
+  <!-- WhatsApp Channel Section -->
+  <section class="whatsapp-section">
+    <p class="whatsapp-text">For the latest links and updates</p>
+    <div class="home-cta">
+      <a href="https://whatsapp.com/channel/0029Va9DGWMHLHQdbTcTSG42" target="_blank" class="whatsapp-button">
+        Join our <span class="whatsapp-highlight">WhatsApp</span> channel
+      </a>
+      <button type="button" class="donation-trigger" data-donation="open">
+        <img class="donation-image" src="logo/donate.png" alt="Donate Us">
+      </button>
     </div>
+  </section>
 
-    <!-- Channel Navigation -->
-    <div class="channel-section">
-      <div class="channel-navigation">
-        <button class="nav-arrow" id="prevBtn">&lt;</button>
-        <div id="channels" class="channel-buttons-container">
-          <div class="loading">Loading channels...</div>
-        </div>
-        <button class="nav-arrow" id="nextBtn">&gt;</button>
-      </div>
+  <!-- Cricket Channels Section -->
+  <section class="channels-section">
+    <h2 class="channels-title">All Channels</h2>
+    <div id="channels-grid" class="channels-grid">
+      <div class="loading">Loading channels...</div>
     </div>
-  </div>
-  
-  <script src="app.js"></script>
+  </section>
+
+  <footer class="home-footer">
+    <p class="footer-text">
+      Sports Flix provides free access to third-party shared links and does not claim ownership of any content. All channels and streams belong to their respective owners. This platform is for educational purposes only and is non-profit.
+    </p>
+  </footer>
+
+  <script src="home.js"></script>
+  <script src="donation.js"></script>
+  <script src="security.js"></script>
+
 </body>
 </html>
 
