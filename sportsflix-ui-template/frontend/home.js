@@ -16,26 +16,35 @@ function loadChannels() {
     });
 }
 
-function displayChannels(channels) {
+function displayChannels(channelData) {
   const grid = document.getElementById("channels-grid");
   grid.innerHTML = "";
   
-  // Channels are already sorted by order from server
-  channels.forEach(channel => {
+  // Handle both array and object formats
+  let channelEntries;
+  if (Array.isArray(channelData)) {
+    channelEntries = channelData.map(ch => [ch.name, ch]);
+  } else {
+    channelEntries = Object.entries(channelData);
+  }
+  
+  channelEntries.forEach(([name, data]) => {
     const card = document.createElement("div");
     card.className = "home-channel-card";
-    card.dataset.channelName = channel.name;
+    card.dataset.channelName = name;
+    
+    const logo = data.logo || null;
     
     // Add channel logo if available
-    if (channel.logo) {
+    if (logo) {
       const img = document.createElement("img");
-      img.src = channel.logo;
-      img.alt = channel.name;
+      img.src = logo;
+      img.alt = name;
       img.referrerPolicy = "no-referrer";
       img.onerror = () => {
-        if (!img.dataset.proxyTried && channel.logo && !channel.logo.startsWith("/api/logo")) {
+        if (!img.dataset.proxyTried && logo && !logo.startsWith("/api/logo")) {
           img.dataset.proxyTried = "1";
-          img.src = `/api/logo?url=${encodeURIComponent(channel.logo)}`;
+          img.src = `/api/logo?url=${encodeURIComponent(logo)}`;
           return;
         }
         img.style.display = "none";
@@ -48,13 +57,13 @@ function displayChannels(channels) {
     // Channel name fallback (shown if no logo)
     const nameDiv = document.createElement("div");
     nameDiv.className = "channel-name-fallback";
-    nameDiv.textContent = channel.name.toUpperCase();
-    nameDiv.style.display = channel.logo ? "none" : "block";
+    nameDiv.textContent = name.toUpperCase();
+    nameDiv.style.display = logo ? "none" : "block";
     card.appendChild(nameDiv);
     
     // Click handler - navigate to channel page
     card.onclick = () => {
-      window.location.href = `channel.html?channel=${encodeURIComponent(channel.name)}`;
+      window.location.href = `channel.html?channel=${encodeURIComponent(name)}`;
     };
     
     grid.appendChild(card);
