@@ -1,21 +1,18 @@
-FROM node:18-alpine
+FROM node:20-alpine
 
 WORKDIR /app
 
-# Copy package files
-COPY package.json ./
+COPY backend/package*.json ./backend/
+RUN cd backend && npm install
 
-# Install dependencies
-RUN npm install
+COPY backend/ ./backend/
+COPY sportsflix-ui-template/ ./sportsflix-ui-template/
 
-# Copy all files
-COPY . .
+WORKDIR /app/backend
 
-# Expose port
-EXPOSE 8000
+EXPOSE 5000
 
-# Set environment variable
-ENV PORT=8000
+ENV PORT=5000
+ENV NODE_ENV=production
 
-# Run the server
 CMD ["node", "server.js"]
