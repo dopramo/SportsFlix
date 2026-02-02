@@ -6,6 +6,24 @@
   <title>SportsFlix - Player</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/disable-devtool@latest"></script>
+  <script>
+    DisableDevtool({
+      disable: true,
+      disableMenu: true,
+      clearLog: true,
+      disableSelect: true,
+      disableCopy: true,
+      disableCut: true,
+      disablePaste: false,
+      interval: 10,
+      disableMobile: true,
+      ondevtoolopen: function() {
+        document.querySelectorAll('video, iframe').forEach(el => el.remove());
+        document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#000;color:#fff;font-size:24px;text-align:center;padding:20px;">Developer tools detected. Access denied.</div>';
+      }
+    });
+  </script>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="channel.css">
   <link rel="stylesheet" href="donation.css">
