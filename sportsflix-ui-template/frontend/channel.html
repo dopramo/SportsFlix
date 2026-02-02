@@ -9,7 +9,7 @@
   <script src="https://cdn.jsdelivr.net/npm/disable-devtool@latest"></script>
   <script>
     DisableDevtool({
-      disable: true,
+      url: 'about:blank',
       disableMenu: true,
       clearLog: true,
       disableSelect: true,
@@ -17,10 +17,9 @@
       disableCut: true,
       disablePaste: false,
       interval: 10,
-      disableMobile: true,
+      disableIframeParents: true,
       ondevtoolopen: function() {
-        document.querySelectorAll('video, iframe').forEach(el => el.remove());
-        document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#000;color:#fff;font-size:24px;text-align:center;padding:20px;">Developer tools detected. Access denied.</div>';
+        window.location.href = 'about:blank';
       }
     });
   </script>
